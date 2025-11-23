@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_init.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccakir <ccakir@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: ccakir <ccakir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 13:48:43 by ccakir            #+#    #+#             */
-/*   Updated: 2025/11/12 23:33:21 by ccakir           ###   ########.fr       */
+/*   Updated: 2025/11/23 15:55:21 by ccakir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,16 @@ int	update_frame(t_game *game)
 	if (game->game_over)
 	{
 		game->game_over_timer++;
-		if (game->game_over_timer > 300)
-		{
+		if (game->game_over_timer > 999)
 			exit_game(game);
-		}
 		mlx_clear_window(game->mlx, game->win);
-		mlx_put_image_to_window(game->mlx, game->win, 
-			game->img_game_over, 0, 0);
+		mlx_put_image_to_window(
+			game->mlx,
+			game->win,
+			game->img_game_over,
+			((game->w * TILE) - 1920) / 2,
+			((game->h * TILE) - 1080) / 2
+		);
 		return (0);
 	}
 	if (game->frame % 5 == 0)
@@ -49,10 +52,10 @@ void	game_init(t_game *game, char *map_path)
 	game->c_left = count_collectables(game);
 	game->mlx = mlx_init();
 	if(!game->mlx)
-		error_exit("Mlx library error!");
+		error_exit("Error");
 	game->win = mlx_new_window(game->mlx, game->w * TILE, game->h * TILE, "so_long");
 	if(!game->win)
-		error_exit("Window can't started!");
+		error_exit("Error");
 	load_static_textures(game);
 	load_coin_textures(game);
 	game->coin_frame = 0;

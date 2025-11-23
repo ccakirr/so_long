@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccakir <ccakir@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: ccakir <ccakir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 23:59:59 by ccakir            #+#    #+#             */
-/*   Updated: 2025/11/12 23:08:41 by ccakir           ###   ########.fr       */
+/*   Updated: 2025/11/23 15:58:34 by ccakir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int main(int argc, char **argv)
 		return (1);
 	}
 	if (!check_map(argv[1]))
-		error_exit("Map is not <*.ber> format.");
+		error_exit("Error");
 	game_init(&game, argv[1]);
 	return (0);
 }
