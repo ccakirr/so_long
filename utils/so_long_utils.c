@@ -73,13 +73,18 @@ char	**map_dup(char	**map)
 	len = map_len(map);
 	i = 0;
 	res = malloc(sizeof(char *) * (len + 1));
+	if (!res)
+		return (NULL);
 	while (i < len)
 	{
 		res[i] = ft_strdup(map[i]);
-		if (!res)
+		if (!res[i])
 		{
 			while (i > 0)
+			{
+				i--;
 				free(res[i]);
+			}
 			free(res);
 			return (NULL);
 		}

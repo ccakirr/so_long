@@ -33,6 +33,7 @@ void	find_player(t_game	*game)
 		}
 		i++;
 	}
+	free_map(game->map);
 	error_exit("Can't find player!");
 }
 
@@ -93,6 +94,8 @@ void	validate_reachability(t_game *game)
 	if(!((collected_C == total_C) || (exit_reachable)))
 	{
 		free_map(map_cpy);
+		free_map(game->map);
 		error_exit("Map isn't obeys the rules!");
 	}
+	free_map(map_cpy);
 }

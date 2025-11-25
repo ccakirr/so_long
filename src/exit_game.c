@@ -6,16 +6,31 @@
 /*   By: ccakir <ccakir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 22:36:00 by ccakir            #+#    #+#             */
-/*   Updated: 2025/11/23 16:04:44 by ccakir           ###   ########.fr       */
+/*   Updated: 2025/11/25 15:41:31 by ccakir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
+static void end_still_reachable(t_game	*game)
+{
+	game->map = NULL;
+	game->img_floor = NULL;
+	game->img_wall = NULL;
+	game->img_door_closed = NULL;
+	game->img_door_opened = NULL;
+	game->img_player_idle = NULL;
+	game->img_game_over = NULL;
+	game->win = NULL;
+	game->mlx = NULL;
+}
+
 void	exit_game(t_game *game)
 {
+	int	i;
+
 	if (game->map)
-		free(game->map);
+		free_map(game->map);
 	if (game->img_floor)
 		mlx_destroy_image(game->mlx, game->img_floor);
 	if (game->img_wall)
@@ -28,13 +43,21 @@ void	exit_game(t_game *game)
 		mlx_destroy_image(game->mlx, game->img_player_idle);
 	if (game->img_game_over)
 		mlx_destroy_image(game->mlx, game->img_game_over);
+	i = 0;
+	while (i < 4)
+	{
+		if (game->coin[i])
+			mlx_destroy_image(game->mlx, game->coin[i]);
+		i++;
+	}
 	if (game->win)
-	mlx_destroy_window(game->mlx, game->win);
+		mlx_destroy_window(game->mlx, game->win);
 	if (game->mlx)
 	{
 		mlx_destroy_display(game->mlx);
 		free(game->mlx);
 	}
+	end_still_reachable(game);
 	exit(0);
 }
 

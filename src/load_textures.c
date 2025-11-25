@@ -25,7 +25,13 @@ void	load_static_textures(t_game *game)
 	game->img_game_over = mlx_xpm_file_to_image(game->mlx, "assets/game_over.xpm", &w, &h);
 	if (!game->img_floor || !game->img_wall || !game->img_door_closed
 		|| !game->img_door_opened || !game->img_player_idle || !game->img_game_over)
+	{
+		free_map(game->map);
+		mlx_destroy_window(game->mlx, game->win);
+		mlx_destroy_display(game->mlx);
+		free(game->mlx);
 		error_exit("Game textures can't loading!");
+	}
 }
 
 void	load_coin_textures(t_game *game)
@@ -45,10 +51,13 @@ void	load_coin_textures(t_game *game)
 	{
 		game->coin[i] = mlx_xpm_file_to_image(game->mlx, coin_paths[i], &w, &h);
 		if (!(game->coin[i]))
-			{
-				write(1,"coin",ft_strlen("coin"));
-				error_exit("Game textures can't loading!");
-			}
+		{
+			free_map(game->map);
+			mlx_destroy_window(game->mlx, game->win);
+			mlx_destroy_display(game->mlx);
+			free(game->mlx);
+			error_exit("Game textures can't loading!");
+		}
 		i++;
 	}
 }

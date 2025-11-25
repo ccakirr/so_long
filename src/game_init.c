@@ -6,7 +6,7 @@
 /*   By: ccakir <ccakir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 13:48:43 by ccakir            #+#    #+#             */
-/*   Updated: 2025/11/23 15:55:21 by ccakir           ###   ########.fr       */
+/*   Updated: 2025/11/25 15:44:49 by ccakir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,16 +52,25 @@ void	game_init(t_game *game, char *map_path)
 	game->c_left = count_collectables(game);
 	game->mlx = mlx_init();
 	if(!game->mlx)
+	{
+		free_map(game->map);
 		error_exit("Error");
+	}
 	game->win = mlx_new_window(game->mlx, game->w * TILE, game->h * TILE, "so_long");
 	if(!game->win)
+	{
+		free_map(game->map);
+		mlx_destroy_display(game->mlx);
+		free(game->mlx);
 		error_exit("Error");
+	}
 	load_static_textures(game);
 	load_coin_textures(game);
 	game->coin_frame = 0;
 	game->game_over = 0;
 	game->game_over_timer = 0;
 	game->movement_count = 0;
+	game->frame = 0;
 	draw_map(game);
 	mlx_expose_hook(game->win, expose_hook, game);
 	mlx_key_hook(game->win, handle_input, game);

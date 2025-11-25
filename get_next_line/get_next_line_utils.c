@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccakir <ccakir@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: ccakir <ccakir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/25 15:39:59 by ccakir            #+#    #+#             */
-/*   Updated: 2025/11/10 01:05:43 by ccakir           ###   ########.fr       */
+/*   Updated: 2025/11/25 14:53:20 by ccakir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,18 +69,37 @@ char	*ft_strjoin(char *s1, char *s2)
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	char	*sub;
+	size_t	slen;
 	size_t	i;
 
-	if (!s || start >= ft_strlen(s))
+	if (!s)
 		return (NULL);
-	if (len > ft_strlen(s + start))
-		len = ft_strlen(s + start);
+
+	slen = ft_strlen(s);
+	if (start >= slen)
+	{
+		sub = malloc(1);
+		if (!sub)
+			return (NULL);
+		sub[0] = '\0';
+		return (sub);
+	}
+
+	if (len > slen - start)
+		len = slen - start;
+
 	sub = malloc(len + 1);
 	if (!sub)
 		return (NULL);
+
 	i = 0;
 	while (i < len)
-		sub[i++] = s[start++];
+	{
+		sub[i] = s[start + i];
+		i++;
+	}
 	sub[i] = '\0';
+
 	return (sub);
 }
+

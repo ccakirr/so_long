@@ -102,11 +102,20 @@ static int	check_content(char **map)
 void	validate_map(t_game *game)
 {
 	if (!check_rectangle(game->map))
+	{
+		free_map(game->map);
 		error_exit("Map is not rectangular");
+	}
 	if (!check_walls(game->map))
+	{
+		free_map(game->map);
 		error_exit("Invalid walls");
+	}
 	if (!check_content(game->map))
+	{
+		free_map(game->map);
 		error_exit("Invalid map content");
+	}
 	find_player(game);
 	validate_reachability(game);
 }
