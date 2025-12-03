@@ -6,7 +6,7 @@
 /*   By: ccakir <ccakir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 13:48:43 by ccakir            #+#    #+#             */
-/*   Updated: 2025/11/25 15:44:49 by ccakir           ###   ########.fr       */
+/*   Updated: 2025/11/29 00:20:20 by ccakir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,38 @@ int	update_frame(t_game *game)
 			game->img_game_over,
 			((game->w * TILE) - 1920) / 2,
 			((game->h * TILE) - 1080) / 2
-		);
+			);
 		return (0);
 	}
 	if (game->frame % 5 == 0)
 		game->coin_frame = (game->coin_frame + 1) % 4;
 	draw_map(game);
 	return (0);
+}
+
+void	set_zero(t_game *game)
+{
+	game->frame = 0;
+	game->game_over_timer = 0;
+	game->game_over = 0;
+	game->coin_frame = 0;
+	game->movement_count = 0;
+}
+
+void	check_mlx(t_game *game)
+{
+	if (!game->mlx)
+	{
+		free_map(game->map);
+		error_exit("MLX init failed");
+	}
+	if (!game->win)
+	{
+		free_map(game->map);
+		mlx_destroy_display(game->mlx);
+		free(game->mlx);
+		error_exit("MLX window creation failed");
+	}
 }
 
 void	game_init(t_game *game, char *map_path)
@@ -51,26 +76,12 @@ void	game_init(t_game *game, char *map_path)
 	set_height_and_width(game);
 	game->c_left = count_collectables(game);
 	game->mlx = mlx_init();
-	if(!game->mlx)
-	{
-		free_map(game->map);
-		error_exit("Error");
-	}
-	game->win = mlx_new_window(game->mlx, game->w * TILE, game->h * TILE, "so_long");
-	if(!game->win)
-	{
-		free_map(game->map);
-		mlx_destroy_display(game->mlx);
-		free(game->mlx);
-		error_exit("Error");
-	}
+	game->win = mlx_new_window(game->mlx, game->w * TILE,
+			game->h * TILE, "so_long");
+	check_mlx(game);
 	load_static_textures(game);
 	load_coin_textures(game);
-	game->coin_frame = 0;
-	game->game_over = 0;
-	game->game_over_timer = 0;
-	game->movement_count = 0;
-	game->frame = 0;
+	set_zero(game);
 	draw_map(game);
 	mlx_expose_hook(game->win, expose_hook, game);
 	mlx_key_hook(game->win, handle_input, game);

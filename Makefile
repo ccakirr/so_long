@@ -1,50 +1,25 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: ccakir <ccakir@student.42istanbul.com.t    +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2025/11/12 02:00:00 by ccakir            #+#    #+#              #
-#    Updated: 2025/11/12 22:50:10 by ccakir           ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
-# **************************************************************************** #
-#                                  COLORS                                      #
-# **************************************************************************** #
-
-RED     = \033[0;31m
 GREEN   = \033[0;32m
 YELLOW  = \033[0;33m
 BLUE    = \033[0;34m
 RESET   = \033[0m
-
-# **************************************************************************** #
-#                                  VARIABLES                                   #
-# **************************************************************************** #
 
 NAME        = so_long
 CC          = cc
 CFLAGS      = -Wall -Wextra -Werror
 INCLUDES    = -Iinc -Iget_next_line -Iminilibx-linux -Ift_printf
 
-# Directories
 SRC_DIR     = src
 UTILS_DIR   = utils
-GNL_DIR     = get_next_line
-FT_PRINTF_DIR = ft_printf
+GNL_DIR     = my_libs/get_next_line
+FT_PRINTF_DIR = my_libs/ft_printf
 OBJ_DIR     = obj
 
-# MLX Library
-MLX_DIR     = minilibx-linux
+MLX_DIR     = my_libs/minilibx-linux
 MLX_LIB     = $(MLX_DIR)/libmlx.a
 MLX_FLAGS   = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm
 
-# FT_PRINTF Library
-FT_PRINTF_LIB = $(FT_PRINTF_DIR)/ft_printf.a
+FT_PRINTF_LIB = $(FT_PRINTF_DIR)/libftprintf.a
 
-# Source Files
 SRCS        = $(SRC_DIR)/main.c \
               $(SRC_DIR)/map.c \
               $(SRC_DIR)/validate.c \
@@ -55,15 +30,16 @@ SRCS        = $(SRC_DIR)/main.c \
               $(SRC_DIR)/game_init.c \
               $(SRC_DIR)/handle_input.c \
               $(UTILS_DIR)/so_long_utils.c \
+              $(UTILS_DIR)/so_long_utils_01.c \
               $(GNL_DIR)/get_next_line.c \
               $(GNL_DIR)/get_next_line_utils.c
 
-# Object Files
-OBJS        = $(SRCS:%.c=$(OBJ_DIR)/%.o)
+NORM_LIBS 	= $(SRC_DIR)/ \
+			  $(UTILS_DIR)/ \
+			  $(GNL_DIR)/ \
+			  $(FT_PRINTF_DIR)/ \
 
-# **************************************************************************** #
-#                                   RULES                                      #
-# **************************************************************************** #
+OBJS        = $(SRCS:%.c=$(OBJ_DIR)/%.o)
 
 all: $(NAME)
 
@@ -114,5 +90,8 @@ re: fclean all
 
 run: all
 	@./$(NAME) maps/test.ber
+
+norm: clean
+	norminette $(NORM_LIBS)
 
 .PHONY: all clean fclean re run

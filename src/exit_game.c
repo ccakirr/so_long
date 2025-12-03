@@ -6,13 +6,13 @@
 /*   By: ccakir <ccakir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 22:36:00 by ccakir            #+#    #+#             */
-/*   Updated: 2025/11/25 15:41:31 by ccakir           ###   ########.fr       */
+/*   Updated: 2025/11/29 02:50:10 by ccakir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-static void end_still_reachable(t_game	*game)
+static void	end_still_reachable(t_game	*game)
 {
 	game->map = NULL;
 	game->img_floor = NULL;
@@ -25,12 +25,10 @@ static void end_still_reachable(t_game	*game)
 	game->mlx = NULL;
 }
 
-void	exit_game(t_game *game)
+static void	destroy_images(t_game *game)
 {
 	int	i;
 
-	if (game->map)
-		free_map(game->map);
 	if (game->img_floor)
 		mlx_destroy_image(game->mlx, game->img_floor);
 	if (game->img_wall)
@@ -50,6 +48,13 @@ void	exit_game(t_game *game)
 			mlx_destroy_image(game->mlx, game->coin[i]);
 		i++;
 	}
+}
+
+void	exit_game(t_game *game)
+{
+	if (game->map)
+		free_map(game->map);
+	destroy_images(game);
 	if (game->win)
 		mlx_destroy_window(game->mlx, game->win);
 	if (game->mlx)

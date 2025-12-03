@@ -6,7 +6,7 @@
 /*   By: ccakir <ccakir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 02:45:13 by ccakir            #+#    #+#             */
-/*   Updated: 2025/11/23 15:59:45 by ccakir           ###   ########.fr       */
+/*   Updated: 2025/11/29 03:00:59 by ccakir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char	*ft_strtrim(char const	*str, char const	*set)
 	return (res);
 }
 
-char	**map_dup(char	**map)
+char	**map_dup(char **map)
 {
 	int		len;
 	int		i;
@@ -71,20 +71,17 @@ char	**map_dup(char	**map)
 	if (!map)
 		return (NULL);
 	len = map_len(map);
-	i = 0;
 	res = malloc(sizeof(char *) * (len + 1));
 	if (!res)
 		return (NULL);
+	i = 0;
 	while (i < len)
 	{
 		res[i] = ft_strdup(map[i]);
 		if (!res[i])
 		{
 			while (i > 0)
-			{
-				i--;
-				free(res[i]);
-			}
+				free(res[--i]);
 			free(res);
 			return (NULL);
 		}
@@ -105,37 +102,4 @@ void	free_map(char	**map)
 		i++;
 	}
 	free(map);
-}
-
-int	map_len(char	**map)
-{
-	int	i;
-
-	i = 0;
-	while (map[i])
-		i++;
-	return (i);
-}
-
-int	*make_all_array_zero(int	*array, int	len)
-{
-	int	i;
-
-	i = 0;
-	while (i < len)
-	{
-		array[i] = 0;
-		i++;
-	}
-	return (array);
-}
-
-void	error_exit(char	*msg)
-{
-	write(2, "Error\n", 6);
-	if(!msg)
-		write(2, "Unknown Error!", ft_strlen("Unknown Error!"));
-	write(2, msg, ft_strlen(msg));
-	write(2, "\n", 1);
-	exit(1);
 }

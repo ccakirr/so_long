@@ -6,7 +6,7 @@
 /*   By: ccakir <ccakir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 22:49:04 by ccakir            #+#    #+#             */
-/*   Updated: 2025/11/23 16:04:41 by ccakir           ###   ########.fr       */
+/*   Updated: 2025/12/03 20:20:45 by ccakir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,61 +37,70 @@ void	find_player(t_game	*game)
 	error_exit("Can't find player!");
 }
 
-void	flood_fill(char	**map, int	y, int	x, int *exit_reachable, int *collected_C)
+void	flood_fill(char	**map, t_game *game,
+					int *exit_reachable, int *collected_c)
 {
-	if (y < 0 || x < 0 || !map[y] || x >= (int)ft_strlen(map[y]))
+	if (game->py < 0 || game->px < 0 || !map[game->py]
+		|| game->px >= (int)ft_strlen(map[game->py]))
 		return ;
-	if (map[y][x] == '1' || map[y][x] == 'V')
+	if (map[game->py][game->px] == '1' || map[game->py][game->px] == 'V')
 		return ;
-	if (map[y][x] == 'C')
-		(*collected_C)++;
-	if (map[y][x] == 'E')
+	if (map[game->py][game->px] == 'C')
+		(*collected_c)++;
+	if (map[game->py][game->px] == 'E')
 	{
 		*exit_reachable = 1;
 		return ;
 	}
-	map[y][x] = 'V';
-	flood_fill(map, y + 1, x, exit_reachable, collected_C);
-	flood_fill(map, y - 1, x, exit_reachable, collected_C);
-	flood_fill(map, y, x + 1, exit_reachable, collected_C);
-	flood_fill(map, y, x - 1, exit_reachable, collected_C);
+	map[game->py][game->px] = 'V';
+	flood_fill(map, game, exit_reachable, collected_c);
+	game->px++;
+	flood_fill(map, game, exit_reachable, collected_c);
+	game->px -= 2;
+	flood_fill(map, game, exit_reachable, collected_c);
+	game->px++;
+	game->py++;
+	flood_fill(map, game, exit_reachable, collected_c);
+	game->py -= 2;
+	flood_fill(map, game, exit_reachable, collected_c);
+	game->py++;
 }
 
 int	count_collectables(t_game	*game)
 {
 	int	i;
 	int	j;
-	int	total_C;
+	int	total_c;
 
 	i = 0;
-	total_C = 0;
+	total_c = 0;
 	while (game->map[i])
 	{
 		j = 0;
 		while (game->map[i][j])
 		{
-			if(game->map[i][j] == 'C')
-				total_C++;
+			if (game->map[i][j] == 'C')
+				total_c++;
 			j++;
 		}
 		i++;
 	}
-	return (total_C);
+	return (total_c);
 }
 
 void	validate_reachability(t_game *game)
 {
 	char	**map_cpy;
-	int		collected_C;
+	int		collected_c;
 	int		exit_reachable;
-	int		total_C;
+	int		total_c;
 
-	collected_C = 0;
+	collected_c = 0;
 	exit_reachable = 0;
 	map_cpy = map_dup(game->map);
-	total_C = count_collectables(game);
-	flood_fill(map_cpy, game->py, game->px, &exit_reachable, &collected_C);
-	if(!((collected_C == total_C) || (exit_reachable)))
+	total_c = count_collectables(game);
+	flood_fill(map_cpy, game, &exit_reachable, &collected_c);
+	if (!((collected_c == total_c) && (exit_reachable)))
 	{
 		free_map(map_cpy);
 		free_map(game->map);

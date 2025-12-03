@@ -6,7 +6,7 @@
 /*   By: ccakir <ccakir@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 19:25:02 by ccakir            #+#    #+#             */
-/*   Updated: 2025/11/23 16:04:04 by ccakir           ###   ########.fr       */
+/*   Updated: 2025/11/29 00:23:36 by ccakir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,21 @@ void	load_static_textures(t_game *game)
 	int	w;
 	int	h;
 
-	game->img_floor = mlx_xpm_file_to_image(game->mlx, "assets/floor.xpm", &w, &h);
-	game->img_wall = mlx_xpm_file_to_image(game->mlx, "assets/wall.xpm", &w, &h);
-	game->img_door_closed = mlx_xpm_file_to_image(game->mlx, "assets/door00.xpm", &w, &h);
-	game->img_door_opened = mlx_xpm_file_to_image(game->mlx, "assets/door01.xpm", &w, &h);
-	game->img_player_idle = mlx_xpm_file_to_image(game->mlx, "assets/player/player.xpm", &w, &h);
-	game->img_game_over = mlx_xpm_file_to_image(game->mlx, "assets/game_over.xpm", &w, &h);
+	game->img_floor = mlx_xpm_file_to_image(game->mlx,
+			"assets/floor.xpm", &w, &h);
+	game->img_wall = mlx_xpm_file_to_image(game->mlx,
+			"assets/wall.xpm", &w, &h);
+	game->img_door_closed = mlx_xpm_file_to_image(game->mlx,
+			"assets/door00.xpm", &w, &h);
+	game->img_door_opened = mlx_xpm_file_to_image(game->mlx,
+			"assets/door01.xpm", &w, &h);
+	game->img_player_idle = mlx_xpm_file_to_image(game->mlx,
+			"assets/player/player.xpm", &w, &h);
+	game->img_game_over = mlx_xpm_file_to_image(game->mlx,
+			"assets/game_over.xpm", &w, &h);
 	if (!game->img_floor || !game->img_wall || !game->img_door_closed
-		|| !game->img_door_opened || !game->img_player_idle || !game->img_game_over)
+		|| !game->img_door_opened
+		|| !game->img_player_idle || !game->img_game_over)
 	{
 		free_map(game->map);
 		mlx_destroy_window(game->mlx, game->win);
@@ -61,4 +68,3 @@ void	load_coin_textures(t_game *game)
 		i++;
 	}
 }
-
