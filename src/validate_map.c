@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   validate.c                                         :+:      :+:    :+:   */
+/*   validate_map.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccakir <ccakir@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ccakir <ccakir@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 00:54:21 by ccakir            #+#    #+#             */
-/*   Updated: 2025/12/03 20:50:51 by ccakir           ###   ########.fr       */
+/*   Updated: 2025/12/04 09:34:26 by ccakir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static int	check_walls(char	**map)
 
 static int	check_validate(int *validate)
 {
-	if (validate[4] != 1 || validate[3] < 1 || validate[2] < 1)
+	if (validate[4] != 1 || validate[3] != 1 || validate[2] < 1)
 		return (0);
 	return (1);
 }
@@ -101,7 +101,8 @@ void	validate_map(t_game *game)
 	int	i;
 
 	i = -1;
-	// ilk char var mı
+	if (!game->map || !game->map[0] || !game->map[0][0])
+		error_exit("Map or map's first chracter is empty");
 	if (!check_rectangle(game->map))
 	{
 		free_map(game->map);
@@ -117,6 +118,5 @@ void	validate_map(t_game *game)
 		free_map(game->map);
 		error_exit("Invalid map content");
 	}
-	find_player(game);
 	validate_reachability(game);
 }

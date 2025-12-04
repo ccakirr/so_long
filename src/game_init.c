@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game_init.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccakir <ccakir@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ccakir <ccakir@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/12 13:48:43 by ccakir            #+#    #+#             */
-/*   Updated: 2025/11/29 00:20:20 by ccakir           ###   ########.fr       */
+/*   Updated: 2025/12/04 11:08:09 by ccakir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int	update_frame(t_game *game)
 		game->game_over_timer++;
 		if (game->game_over_timer > 999)
 			exit_game(game);
-		mlx_clear_window(game->mlx, game->win);
 		mlx_put_image_to_window(
 			game->mlx,
 			game->win,
@@ -71,8 +70,6 @@ void	game_init(t_game *game, char *map_path)
 {
 	game->map = read_map_file(map_path);
 	validate_map(game);
-	find_player(game);
-	validate_reachability(game);
 	set_height_and_width(game);
 	game->c_left = count_collectables(game);
 	game->mlx = mlx_init();

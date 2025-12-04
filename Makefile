@@ -21,8 +21,8 @@ MLX_FLAGS   = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm
 FT_PRINTF_LIB = $(FT_PRINTF_DIR)/libftprintf.a
 
 SRCS        = $(SRC_DIR)/main.c \
-              $(SRC_DIR)/map.c \
-              $(SRC_DIR)/validate.c \
+              $(SRC_DIR)/map_parse.c \
+              $(SRC_DIR)/validate_map.c \
               $(SRC_DIR)/floodfill.c \
               $(SRC_DIR)/load_textures.c \
               $(SRC_DIR)/render.c \

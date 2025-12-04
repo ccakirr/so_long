@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccakir <ccakir@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ccakir <ccakir@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 00:17:12 by ccakir            #+#    #+#             */
-/*   Updated: 2025/12/03 20:15:03 by ccakir           ###   ########.fr       */
+/*   Updated: 2025/12/04 08:43:15 by ccakir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	error_exit(char	*msg);
 void	free_map(char	**map);
 void	find_player(t_game	*game);
 void	flood_fill(char	**map, t_game *game,
-int 	*exit_reachable, int *collected_c);
+int		*exit_reachable, int *collected_c);
 int		count_collectables(t_game	*game);
 void	validate_reachability(t_game *game);
 void	load_static_textures(t_game *game);

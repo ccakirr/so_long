@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   floodfill.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccakir <ccakir@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ccakir <ccakir@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/10 22:49:04 by ccakir            #+#    #+#             */
-/*   Updated: 2025/12/03 20:20:45 by ccakir           ###   ########.fr       */
+/*   Updated: 2025/12/04 09:34:38 by ccakir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ void	validate_reachability(t_game *game)
 	int		exit_reachable;
 	int		total_c;
 
+	find_player(game);
 	collected_c = 0;
 	exit_reachable = 0;
 	map_cpy = map_dup(game->map);

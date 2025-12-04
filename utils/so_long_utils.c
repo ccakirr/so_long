@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ccakir <ccakir@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ccakir <ccakir@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 02:45:13 by ccakir            #+#    #+#             */
-/*   Updated: 2025/11/29 03:00:59 by ccakir           ###   ########.fr       */
+/*   Updated: 2025/12/04 08:34:31 by ccakir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ void	free_map(char	**map)
 	int	i;
 
 	i = 0;
+	if (!map || !*map || !map[0][0])
+		return ;
 	while (map[i])
 	{
 		free(map[i]);
